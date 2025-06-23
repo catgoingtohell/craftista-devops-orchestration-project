@@ -1,0 +1,37 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: craftista-project
+  namespace: argocd
+spec:
+  description: Craftista application project
+  sourceRepos:
+  - 'https://github.com/craftista/craftista'
+  destinations:
+  - namespace: craftista
+    server: https://kubernetes.default.svc
+  - namespace: craftista-staging
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  namespaceResourceWhitelist:
+  - group: 'apps'
+    kind: Deployment
+  - group: ''
+    kind: Service
+  - group: ''
+    kind: ConfigMap
+  - group: ''
+    kind: Secret
+  - group: 'networking.k8s.io'
+    kind: Ingress
+  roles:
+  - name: admin
+    description: Admin role for craftista project
+    policies:
+    - p, proj:craftista-project:admin, applications, *, craftista-project/*, allow
+    - p, proj:craftista-project:admin, repositories, *, *, allow
+    groups:
+    - craftista:admin

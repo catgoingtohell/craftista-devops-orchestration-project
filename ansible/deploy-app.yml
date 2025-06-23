@@ -1,0 +1,143 @@
+
+---
+- name: Deploy Craftista Application
+  hosts: localhost
+  gather_facts: false
+  vars:
+    namespace: craftista
+    app_name: craftista
+    image_tag: "{{ ansible_date_time.epoch }}"
+  
+  tasks:
+    - name: Create namespace
+      kubernetes.core.k8s:
+        name: "{{ namespace }}"
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: Apply ConfigMap
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: craftista-config
+            namespace: "{{ namespace }}"
+          data:
+            API_URL: "{{ api_url | default('https://api.craftista.com') }}"
+            APP_ENV: "{{ app_env | default('production') }}"
+            LOG_LEVEL: "{{ log_level | default('info') }}"
+
+    - name: Apply Secret
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: craftista-secrets
+            namespace: "{{ namespace }}"
+          type: Opaque
+          data:
+            db-password: "{{ db_password | b64encode }}"
+            api-key: "{{ api_key | b64encode }}"
+            jwt-secret: "{{ jwt_secret | b64encode }}"
+
+    - name: Deploy application
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: "{{ app_name }}-app"
+            namespace: "{{ namespace }}"
+            labels:
+              app: "{{ app_name }}"
+          spec:
+            replicas: "{{ replica_count | default(3) }}"
+            selector:
+              matchLabels:
+                app: "{{ app_name }}"
+            template:
+              metadata:
+                labels:
+                  app: "{{ app_name }}"
+              spec:
+                containers:
+                - name: "{{ app_name }}"
+                  image: "{{ app_name }}:{{ image_tag }}"
+                  ports:
+                  - containerPort: 80
+                  env:
+                  - name: API_URL
+                    valueFrom:
+                      configMapKeyRef:
+                        name: craftista-config
+                        key: API_URL
+                  - name: APP_ENV
+                    valueFrom:
+                      configMapKeyRef:
+                        name: craftista-config
+                        key: APP_ENV
+                  - name: DB_PASSWORD
+                    valueFrom:
+                      secretKeyRef:
+                        name: craftista-secrets
+                        key: db-password
+                  resources:
+                    requests:
+                      memory: "64Mi"
+                      cpu: "50m"
+                    limits:
+                      memory: "128Mi"
+                      cpu: "100m"
+
+    - name: Create service
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: "{{ app_name }}-service"
+            namespace: "{{ namespace }}"
+          spec:
+            selector:
+              app: "{{ app_name }}"
+            ports:
+            - protocol: TCP
+              port: 80
+              targetPort: 80
+            type: ClusterIP
+
+    - name: Create ingress
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: networking.k8s.io/v1
+          kind: Ingress
+          metadata:
+            name: "{{ app_name }}-ingress"
+            namespace: "{{ namespace }}"
+            annotations:
+              nginx.ingress.kubernetes.io/rewrite-target: /
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+          spec:
+            tls:
+            - hosts:
+              - "{{ domain_name | default('craftista.yourdomain.com') }}"
+              secretName: craftista-tls
+            rules:
+            - host: "{{ domain_name | default('craftista.yourdomain.com') }}"
+              http:
+                paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: "{{ app_name }}-service"
+                      port:
+                        number: 80
