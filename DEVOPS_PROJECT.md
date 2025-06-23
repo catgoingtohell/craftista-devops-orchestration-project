@@ -5,9 +5,7 @@
 This project demonstrates the implementation of DevOps tools and techniques on the Craftista application, showcasing integration of multiple DevOps tools in a complete CI/CD pipeline.
 
 ## Team Members
-- **Member 1**: Rayyan - Responsible for Docker, Kubernetes, and ArgoCD
-- **Member 2**: Rayyan - Responsible for Terraform, Ansible, and Infrastructure
-- **Member 3**: Rayyan - Responsible for CI/CD, Monitoring, and Documentation
+- **Member 1**: Rayyan - Responsible for Docker, Kubernetes, ArgoCD, Responsible for Terraform, Ansible, and Infrastructure, Responsible for CI/CD, Monitoring, and Documentation
 
 ## Project Architecture
 
