@@ -1,20 +1,31 @@
-Craftista DevOps Orchestration Project
-Project Overview
-The Craftista DevOps Orchestration Project is a modern web application built with React, designed to demonstrate efficient DevOps practices. It leverages containerization, orchestration, CI/CD pipelines, and infrastructure as code (IaC) to streamline development, deployment, and management processes. This project serves as a reference for building scalable, maintainable applications using industry-standard tools.
-Getting Started
-Prerequisites
+# Craftista DevOps Orchestration Project
 
-Node.js and npm: Install using nvm.
-Docker: For containerization (installation guide).
-kubectl: For Kubernetes management (installation guide).
-Terraform: For IaC (installation guide).
-GitHub account: For repository access and CI/CD configuration.
-Cloud provider account: AWS, GCP, or Azure for Kubernetes cluster deployment.
+## Project Overview
 
-Editing the Code
-You can modify the application code in several ways:
-Using Your Preferred IDE
-Clone the repository and work locally:
+The **Craftista DevOps Orchestration Project** is a modern web application built with React, designed to demonstrate efficient DevOps practices. It leverages containerization, orchestration, CI/CD pipelines, and Infrastructure as Code (IaC) to streamline development, deployment, and management processes. This project serves as a reference for building scalable, maintainable applications using industry-standard tools.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+* **Node.js and npm**: Install using [nvm](https://github.com/nvm-sh/nvm).
+* **Docker**: For containerization. [Installation Guide](https://docs.docker.com/get-docker/)
+* **kubectl**: For Kubernetes management. [Installation Guide](https://kubernetes.io/docs/tasks/tools/)
+* **Terraform**: For IaC. [Installation Guide](https://developer.hashicorp.com/terraform/install)
+* **GitHub account**: For repository access and CI/CD configuration.
+* **Cloud provider account**: AWS, GCP, or Azure for Kubernetes cluster deployment.
+
+---
+
+## Editing the Code
+
+### Using Your Preferred IDE
+
+```bash
 # Clone the repository
 git clone https://github.com/catgoingtohell/craftista-devops-orchestration-project.git
 
@@ -26,45 +37,47 @@ npm install
 
 # Start the development server with auto-reloading
 npm run dev
+```
 
-Editing Directly in GitHub
+### Editing Directly in GitHub
 
-Navigate to the desired file in the repository.
-Click the "Edit" button (pencil icon) at the top right.
-Make changes and commit them.
+1. Navigate to the desired file in the repository.
+2. Click the **Edit** button (pencil icon).
+3. Make changes and commit them.
 
-Using GitHub Codespaces
+### Using GitHub Codespaces
 
-Go to the repository's main page.
-Click the green "Code" button and select the "Codespaces" tab.
-Click "New codespace" to launch a cloud-based development environment.
-Edit files and commit/push changes.
+1. Go to the repository’s main page.
+2. Click the green **Code** button and select the **Codespaces** tab.
+3. Click **New codespace** to launch a cloud-based development environment.
+4. Edit files and commit/push changes.
 
-Technologies Used
-The project is built with:
+---
 
-Frontend:
+## Technologies Used
 
-Vite: Fast build tool for modern web development.
-TypeScript: Static typing for enhanced developer experience.
-React: JavaScript library for building user interfaces.
-shadcn-ui: Accessible UI component library.
-Tailwind CSS: Utility-first CSS framework for styling.
+### Frontend
 
+* **Vite**: Fast build tool for modern web development.
+* **TypeScript**: Static typing for enhanced developer experience.
+* **React**: JavaScript library for building user interfaces.
+* **shadcn-ui**: Accessible UI component library.
+* **Tailwind CSS**: Utility-first CSS framework for styling.
 
-DevOps:
+### DevOps
 
-Docker: Containerization of the application.
-Kubernetes: Orchestration and deployment management.
-GitHub Actions: CI/CD pipeline automation.
-Terraform: Infrastructure as code provisioning.
+* **Docker**: Containerization of the application.
+* **Kubernetes**: Orchestration and deployment management.
+* **GitHub Actions**: CI/CD pipeline automation.
+* **Terraform**: Infrastructure as Code provisioning.
 
+---
 
+## DevOps Documentation
 
-DevOps Documentation
-The following sections outline the DevOps processes for building, testing, deploying, and managing the application, as detailed in the project's DevOps documentation.
-Project Structure
-The repository is organized as follows:
+### Project Structure
+
+```
 ├── .github/workflows/        # GitHub Actions workflows for CI/CD
 ├── k8s/                      # Kubernetes manifests
 ├── terraform/                # Terraform configurations for IaC
@@ -73,147 +86,181 @@ The repository is organized as follows:
 ├── package.json              # Node.js dependencies and scripts
 ├── vite.config.ts            # Vite configuration
 └── README.md                 # Project documentation
+```
 
-Continuous Integration and Continuous Deployment (CI/CD)
-The project uses GitHub Actions to automate the CI/CD pipeline. The workflows are defined in .github/workflows/.
-CI Pipeline
+---
 
-Trigger: Pull requests or pushes to the main branch.
-Steps:
-Linting: Runs npm run lint to enforce code quality.
-Testing: Executes npm test for unit and integration tests.
-Build: Runs npm run build to create a production-ready artifact.
-Docker Build: Builds a Docker image if tests pass.
+## Continuous Integration and Deployment (CI/CD)
 
+CI/CD is powered by GitHub Actions. Workflows are located in `.github/workflows/`.
 
+### CI Pipeline
 
-CD Pipeline
+**Trigger:** Pull requests or pushes to the `main` branch.
 
-Trigger: Successful merge to the main branch.
-Steps:
-Build Docker Image: Creates and tags the image.
-Push to Docker Hub: Pushes the image to a registry (requires DOCKER_HUB_TOKEN secret).
-Deploy to Kubernetes: Applies Kubernetes manifests using kubectl (requires KUBE_CONFIG secret).
+**Steps:**
 
+1. **Linting** – Runs `npm run lint`
+2. **Testing** – Executes `npm test`
+3. **Build** – Runs `npm run build`
+4. **Docker Build** – Builds Docker image if tests pass
 
+### CD Pipeline
 
-To configure secrets:
+**Trigger:** Successful merge to the `main` branch.
 
-Go to the repository's Settings > Secrets and variables > Actions.
-Add DOCKER_HUB_TOKEN for Docker Hub access.
-Add KUBE_CONFIG for Kubernetes cluster access.
+**Steps:**
 
-Containerization with Docker
-The application is containerized using Docker. The Dockerfile defines the build process:
+1. **Build Docker Image**
+2. **Push to Docker Hub** (requires `DOCKER_HUB_TOKEN`)
+3. **Deploy to Kubernetes** using `kubectl` (requires `KUBE_CONFIG`)
 
-Uses a Node.js base image.
-Installs dependencies and builds the React app.
-Serves the app using a lightweight server (e.g., serve).
+### Configuring Secrets
 
-To build and test the Docker image locally:
+In your GitHub repo:
+
+* Go to **Settings > Secrets and variables > Actions**
+* Add:
+
+  * `DOCKER_HUB_TOKEN`
+  * `KUBE_CONFIG`
+
+---
+
+## Containerization with Docker
+
+The app is containerized using Docker.
+
+### Dockerfile Overview
+
+* Uses Node.js base image
+* Installs dependencies and builds React app
+* Serves app using a lightweight server
+
+### Local Docker Commands
+
+```bash
 # Build the image
 docker build -t craftista-app:latest .
 
 # Run the container
 docker run -p 3000:3000 craftista-app:latest
+```
 
-Push the image to Docker Hub:
-# Login to Docker Hub
+### Push to Docker Hub
+
+```bash
 docker login
-
-# Tag the image
 docker tag craftista-app:latest <your-username>/craftista-app:latest
-
-# Push the image
 docker push <your-username>/craftista-app:latest
+```
 
-Kubernetes Orchestration
-Kubernetes is used to manage application deployment and scaling. Manifests are stored in the k8s/ directory:
+---
 
-Deployment: Defines the application pods and replicas.
-Service: Exposes the application within the cluster.
-Ingress: Routes external traffic to the service.
+## Kubernetes Orchestration
 
-To deploy to a Kubernetes cluster:
-# Apply manifests
+Kubernetes manifests are in the `k8s/` directory:
+
+* **Deployment** – Defines pods and replicas
+* **Service** – Exposes app in the cluster
+* **Ingress** – Routes external traffic
+
+### Deployment
+
+```bash
 kubectl apply -f k8s/
+```
 
-Ensure your cluster is configured with kubectl and has an ingress controller (e.g., NGINX) installed.
-Infrastructure as Code with Terraform
-Terraform is used to provision cloud infrastructure, such as an AWS EKS cluster. Configurations are in the terraform/ directory.
-To provision infrastructure:
-# Navigate to terraform directory
+> Ensure your cluster is configured and has an ingress controller (e.g., NGINX).
+
+---
+
+## Infrastructure as Code with Terraform
+
+Terraform config is in the `terraform/` directory.
+
+### Provisioning Infrastructure
+
+```bash
 cd terraform
-
-# Initialize Terraform
 terraform init
-
-# Preview changes
 terraform plan
-
-# Apply changes
 terraform apply
+```
 
-Ensure you have AWS credentials configured (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY) and the AWS CLI installed.
-Monitoring and Logging
+> Ensure AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`) and AWS CLI are configured.
 
-Monitoring: Use Kubernetes tools like Prometheus and Grafana for cluster monitoring (setup instructions in k8s/monitoring/ if available).
-Logging: Application logs are accessible via kubectl logs. Consider integrating with a logging service like ELK or CloudWatch.
+---
 
-Custom Domain Configuration
-To connect a custom domain:
+## Monitoring and Logging
 
-Update DNS settings in your domain registrar to point to the Kubernetes ingress or load balancer IP/hostname.
-Modify k8s/ingress.yaml to include your domain.
-Apply the updated ingress:
+* **Monitoring**: Use Prometheus + Grafana (check `k8s/monitoring/` if available)
+* **Logging**: Use `kubectl logs` or integrate with ELK/CloudWatch
 
+---
+
+## Custom Domain Configuration
+
+1. Update your domain’s DNS to point to the Kubernetes ingress or load balancer.
+2. Modify `k8s/ingress.yaml` with your domain.
+3. Apply the ingress:
+
+```bash
 kubectl apply -f k8s/ingress.yaml
+```
 
-Refer to your cloud provider's DNS documentation or the Kubernetes Ingress guide.
-Deployment Instructions
-To deploy the application:
+Refer to your cloud provider’s DNS docs or the [Kubernetes Ingress Guide](https://kubernetes.io/docs/concepts/services-networking/ingress/).
 
-Set Up CI/CD:
+---
 
-Configure GitHub Actions secrets as described above.
-Ensure workflows in .github/workflows/ are valid.
+## Deployment Instructions
+
+### 1. Set Up CI/CD
+
+* Configure GitHub secrets (`DOCKER_HUB_TOKEN`, `KUBE_CONFIG`)
+* Validate workflows in `.github/workflows/`
+
+### 2. Build and Push Docker Image
+
+See [Docker section](#containerization-with-docker).
+
+### 3. Deploy to Kubernetes
+
+Apply the manifests in `k8s/`.
+
+### 4. Provision Infrastructure
+
+Use Terraform as described above.
+
+### 5. Verify Deployment
+
+```bash
+kubectl get pods
+```
+
+Access the app via the ingress URL or custom domain.
+
+---
+
+## Troubleshooting
+
+| Issue              | Suggestions                                                       |
+| ------------------ | ----------------------------------------------------------------- |
+| CI/CD Failures     | Check GitHub Actions logs, validate secrets, and workflow syntax. |
+| Docker Issues      | Ensure Docker is running and the Dockerfile is correct.           |
+| Kubernetes Errors  | Use `kubectl describe` or `kubectl logs` for debugging.           |
+| Terraform Failures | Verify AWS credentials and Terraform config.                      |
+
+---
+
+## Additional Resources
+
+* [Docker Documentation](https://docs.docker.com/)
+* [Kubernetes Documentation](https://kubernetes.io/docs/)
+* [Terraform Documentation](https://developer.hashicorp.com/terraform/docs)
+* [GitHub Actions Docs](https://docs.github.com/en/actions)
+* [Vite Documentation](https://vitejs.dev/)
+* [React Documentation](https://reactjs.org/)
+* [Tailwind CSS Documentation](https://tailwindcss.com/)
 
 
-Build and Push Docker Image:
-
-Follow the Docker section to build and push the image.
-
-
-Deploy to Kubernetes:
-
-Apply Kubernetes manifests as described.
-
-
-Provision Infrastructure:
-
-Use Terraform to set up the cloud environment.
-
-
-Verify Deployment:
-
-Check pod status with kubectl get pods.
-Access the application via the ingress URL or custom domain.
-
-
-
-Troubleshooting
-
-CI/CD Failures: Check GitHub Actions logs for errors. Verify secrets and workflow syntax.
-Docker Issues: Ensure Docker is running and the Dockerfile is correct.
-Kubernetes Errors: Use kubectl describe or kubectl logs to diagnose pod or ingress issues.
-Terraform Errors: Verify AWS credentials and Terraform configuration.
-
-Additional Resources
-
-Docker Documentation
-Kubernetes Documentation
-Terraform Documentation
-GitHub Actions Documentation
-Vite Documentation
-React Documentation
-Tailwind CSS Documentation
