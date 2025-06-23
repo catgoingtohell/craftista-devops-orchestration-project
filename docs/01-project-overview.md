@@ -33,13 +33,13 @@ The Craftista DevOps Project demonstrates the implementation of a complete DevOp
 - ArgoCD GitOps implementation
 - Container security and optimization
 
-**Member 2: Infrastructure as Code & Configuration Management**
+**Infrastructure as Code & Configuration Management**
 - Terraform infrastructure provisioning
 - Ansible configuration management
 - Cloud resource management
 - Infrastructure security
 
-**Member 3: CI/CD & Monitoring Specialist**
+**CI/CD & Monitoring Specialist**
 - GitHub Actions pipeline development
 - Prometheus monitoring setup
 - Grafana dashboard creation
@@ -90,22 +90,22 @@ The Craftista DevOps Project demonstrates the implementation of a complete DevOp
 
 ## Project Timeline
 
-### Phase 1: Foundation (Week 1-2)
+### Phase 1: Foundation (Week 1)
 - Repository setup and team role assignment
 - Docker containerization
 - Basic Kubernetes deployment
 
-### Phase 2: Infrastructure (Week 3-4)
+### Phase 2: Infrastructure (Week 1)
 - Terraform infrastructure automation
 - Ansible configuration management
 - Environment setup (staging/production)
 
-### Phase 3: Automation (Week 5-6)
+### Phase 3: Automation (Week 1)
 - GitHub Actions CI/CD pipeline
 - ArgoCD GitOps implementation
 - Integration testing
 
-### Phase 4: Monitoring & Documentation (Week 7-8)
+### Phase 4: Monitoring & Documentation (Week 1)
 - Prometheus and Grafana setup
 - Security implementation
 - Complete documentation
